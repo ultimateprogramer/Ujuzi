@@ -46,16 +46,15 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
     private Command settingsBackCommand;
     private Command resultsListOkCommand;
     private Command resultsListBackCommand;
+    private Command selectSearchSubCategoryCommand;
     private Command detailsBackCommand;
     private SplashScreen splashScreen;
-    private Form advancedSearchForm;
-    private TextField textField2;
-    private TextField textField3;
     private List categoryList;
     private List subCategoryList;
     private Form searchForm;
     private TextField textField1;
     private TextField textField;
+    private TextField textField17;
     private List resultList;
     private Form settingsForm;
     private TextField textField6;
@@ -182,98 +181,48 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
      */
     public void commandAction(Command command, Displayable displayable) {//GEN-END:|7-commandAction|0|7-preCommandAction
         // write pre-action user code here
-        if (displayable == advancedSearchForm) {//GEN-BEGIN:|7-commandAction|1|86-preAction
-            if (command == advancedSearchExitCommand) {//GEN-END:|7-commandAction|1|86-preAction
+        if (displayable == categoryList) {//GEN-BEGIN:|7-commandAction|1|30-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|1|30-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|2|86-postAction
+                categoryListAction();//GEN-LINE:|7-commandAction|2|30-postAction
                 // write post-action user code here
-            } else if (command == searchBackCommand) {//GEN-LINE:|7-commandAction|3|83-preAction
+            } else if (command == categoryBackCommand) {//GEN-LINE:|7-commandAction|3|60-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|4|83-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|4|60-postAction
                 // write post-action user code here
-
-                // Clean up
-                selectedSubCategory = -1;
-                textField2.setString("");
-            } else if (command == searchCommand) {//GEN-LINE:|7-commandAction|5|80-preAction
+            } else if (command == getCategoryCommand) {//GEN-LINE:|7-commandAction|5|62-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|6|80-postAction
-                // write post-action user code here
-                getResultList().deleteAll();
-
-                Thread mySearchThread = new Thread(new Runnable() {
-
-                    public void run() {
-                        // Run the search
-                        if(doSearch(textField3.getString())) {
-                            int numResults = searchResultResources.length;
-
-                            for(int resultsLoop = 0; resultsLoop < numResults; resultsLoop++) {
-                                getResultList().append(searchResultResources[resultsLoop].getTitle(), null);
-                            }
-                        }
-                    }
-
-                });
-
-                mySearchThread.start();
-
-            } else if (command == selectSubCategoryCommand) {//GEN-LINE:|7-commandAction|7|72-preAction
-                // write pre-action user code here
-                switchDisplayable(null, getSubCategoryList());//GEN-LINE:|7-commandAction|8|72-postAction
-                // write post-action user code here
-                // clear the list
-                getSubCategoryList().deleteAll();
-
-                int numSubCategories = BootStrap.categoryList[selectedCategory].getChildCategories().size();
-
-                // Add list items
-                for(int subCategoryLoop = 0; subCategoryLoop < numSubCategories; subCategoryLoop++) {
-                    Category currentSubCategory = (Category)BootStrap.categoryList[selectedCategory].getChildCategories().elementAt(subCategoryLoop);
-
-                    getSubCategoryList().append(currentSubCategory.getCategoryName(), null);
-                }
-            }//GEN-BEGIN:|7-commandAction|9|30-preAction
-        } else if (displayable == categoryList) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|9|30-preAction
-                // write pre-action user code here
-                categoryListAction();//GEN-LINE:|7-commandAction|10|30-postAction
-                // write post-action user code here
-            } else if (command == categoryBackCommand) {//GEN-LINE:|7-commandAction|11|60-preAction
-                // write pre-action user code here
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|12|60-postAction
-                // write post-action user code here
-            } else if (command == getCategoryCommand) {//GEN-LINE:|7-commandAction|13|62-preAction
-                // write pre-action user code here
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|14|62-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|6|62-postAction
                 // write post-action user code here
                 if(getCategoryList().size() > 0) {
                     selectedCategory = getCategoryList().getSelectedIndex();
+                    selectedSubCategory = -1;
+                    textField17.setString("");
 
                     String selectedCategoryName = BootStrap.categoryList[selectedCategory].getCategoryName();
 
                     getTextField().setString(selectedCategoryName);
                 }
-            }//GEN-BEGIN:|7-commandAction|15|123-preAction
+            }//GEN-BEGIN:|7-commandAction|7|123-preAction
         } else if (displayable == detailsForm) {
-            if (command == detailsBackCommand) {//GEN-END:|7-commandAction|15|123-preAction
+            if (command == detailsBackCommand) {//GEN-END:|7-commandAction|7|123-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|16|123-postAction
+                switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|8|123-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|17|77-preAction
+            }//GEN-BEGIN:|7-commandAction|9|77-preAction
         } else if (displayable == resultList) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|17|77-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|9|77-preAction
                 // write pre-action user code here
-                resultListAction();//GEN-LINE:|7-commandAction|18|77-postAction
+                resultListAction();//GEN-LINE:|7-commandAction|10|77-postAction
                 // write post-action user code here
-            } else if (command == resultsListBackCommand) {//GEN-LINE:|7-commandAction|19|107-preAction
+            } else if (command == resultsListBackCommand) {//GEN-LINE:|7-commandAction|11|107-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|20|107-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|12|107-postAction
                 // write post-action user code here
-            } else if (command == resultsListOkCommand) {//GEN-LINE:|7-commandAction|21|109-preAction
+            } else if (command == resultsListOkCommand) {//GEN-LINE:|7-commandAction|13|109-preAction
                 // write pre-action user code here
                 if(getResultList().size() > 0) {
-                    switchDisplayable(null, getDetailsForm());//GEN-LINE:|7-commandAction|22|109-postAction
+                    switchDisplayable(null, getDetailsForm());//GEN-LINE:|7-commandAction|14|109-postAction
                     // write post-action user code here
 
                     // Fill in the fields
@@ -290,43 +239,39 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
                     textField15.setString(selectedResource.getEmail());
                     textField16.setString(selectedResource.getWebsite());
                 }
-            }//GEN-BEGIN:|7-commandAction|23|51-preAction
+            }//GEN-BEGIN:|7-commandAction|15|49-preAction
         } else if (displayable == searchForm) {
-            if (command == advancedSearchCommand) {//GEN-END:|7-commandAction|23|51-preAction
+            if (command == searchCommand) {//GEN-END:|7-commandAction|15|49-preAction
                 // write pre-action user code here
-                if(selectedCategory > -1) {
-                    switchDisplayable(null, getAdvancedSearchForm());//GEN-LINE:|7-commandAction|24|51-postAction
+                if(selectedCategory > - 1 || selectedSubCategory > -1) {
+                    switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|16|49-postAction
                     // write post-action user code here
-                }
-            } else if (command == searchCommand) {//GEN-LINE:|7-commandAction|25|49-preAction
-                // write pre-action user code here
-                switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|26|49-postAction
-                // write post-action user code here
 
-                getResultList().deleteAll();
+                    getResultList().deleteAll();
 
-                Thread mySearchThread = new Thread(new Runnable() {
+                    Thread mySearchThread = new Thread(new Runnable() {
 
-                    public void run() {
-                        if(doSearch(textField1.getString())) {
-                            int numResults = searchResultResources.length;
+                        public void run() {
+                            if(doSearch(textField1.getString())) {
+                                int numResults = searchResultResources.length;
 
-                            for(int resultsLoop = 0; resultsLoop < numResults; resultsLoop++) {
-                                getResultList().append(searchResultResources[resultsLoop].getTitle(), null);
+                                for(int resultsLoop = 0; resultsLoop < numResults; resultsLoop++) {
+                                    getResultList().append(searchResultResources[resultsLoop].getTitle(), null);
+                                }
                             }
                         }
-                    }
 
-                });
+                    });
 
-                mySearchThread.start();
-            } else if (command == searchExitCommand) {//GEN-LINE:|7-commandAction|27|53-preAction
+                    mySearchThread.start();
+                }
+            } else if (command == searchExitCommand) {//GEN-LINE:|7-commandAction|17|53-preAction
                 // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|28|53-postAction
+                exitMIDlet();//GEN-LINE:|7-commandAction|18|53-postAction
                 // write post-action user code here
-            } else if (command == selectCategoryCommand) {//GEN-LINE:|7-commandAction|29|57-preAction
+            } else if (command == selectCategoryCommand) {//GEN-LINE:|7-commandAction|19|57-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getCategoryList());//GEN-LINE:|7-commandAction|30|57-postAction
+                switchDisplayable(null, getCategoryList());//GEN-LINE:|7-commandAction|20|57-postAction
                 // write post-action user code here
 
                 // Clear the list
@@ -339,9 +284,25 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
 
                     getCategoryList().append(categoryName, null);
                 }
-            } else if (command == settingsCommand) {//GEN-LINE:|7-commandAction|31|94-preAction
+            } else if (command == selectSearchSubCategoryCommand) {//GEN-LINE:|7-commandAction|21|127-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getSettingsForm());//GEN-LINE:|7-commandAction|32|94-postAction
+                if(selectedCategory > -1) {
+                switchDisplayable(null, getSubCategoryList());//GEN-LINE:|7-commandAction|22|127-postAction
+                    // write post-action user code here
+                    getSubCategoryList().deleteAll();
+
+                    int numSubCategories = BootStrap.categoryList[selectedCategory].getChildCategories().size();
+
+                    // Add list items
+                    for(int subCategoryLoop = 0; subCategoryLoop < numSubCategories; subCategoryLoop++) {
+                        Category currentSubCategory = (Category)BootStrap.categoryList[selectedCategory].getChildCategories().elementAt(subCategoryLoop);
+
+                        getSubCategoryList().append(currentSubCategory.getCategoryName(), null);
+                    }
+                }
+            } else if (command == settingsCommand) {//GEN-LINE:|7-commandAction|23|94-preAction
+                // write pre-action user code here
+                switchDisplayable(null, getSettingsForm());//GEN-LINE:|7-commandAction|24|94-postAction
                 // write post-action user code here
 
                 textField4.setString(ApplicationSettings.BASE_URL);
@@ -349,9 +310,9 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
                 textField6.setString(ApplicationSettings.BASE_LAT);
                 textField7.setString(ApplicationSettings.BASE_LON);
                 textField8.setString(ApplicationSettings.BASE_RADIUS);
-            }//GEN-BEGIN:|7-commandAction|33|89-preAction
+            }//GEN-BEGIN:|7-commandAction|25|89-preAction
         } else if (displayable == settingsForm) {
-            if (command == saveSettingsCommand) {//GEN-END:|7-commandAction|33|89-preAction
+            if (command == saveSettingsCommand) {//GEN-END:|7-commandAction|25|89-preAction
                 // write pre-action user code here
 
                 // Save settings
@@ -363,44 +324,45 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
                 String settingsBaseRadius = textField8.getString();
 
                 BootStrap.updateSettingsRMS(settingsApiURL, settingsBasePostal, settingsBaseOEID, settingsBaseLat, settingsBaseLon, settingsBaseRadius);
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|34|89-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|26|89-postAction
                 // write post-action user code here
-            } else if (command == settingsBackCommand) {//GEN-LINE:|7-commandAction|35|91-preAction
+            } else if (command == settingsBackCommand) {//GEN-LINE:|7-commandAction|27|91-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|36|91-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|28|91-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|37|24-preAction
+            }//GEN-BEGIN:|7-commandAction|29|24-preAction
         } else if (displayable == splashScreen) {
-            if (command == SplashScreen.DISMISS_COMMAND) {//GEN-END:|7-commandAction|37|24-preAction
+            if (command == SplashScreen.DISMISS_COMMAND) {//GEN-END:|7-commandAction|29|24-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|38|24-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|30|24-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|39|33-preAction
+            }//GEN-BEGIN:|7-commandAction|31|33-preAction
         } else if (displayable == subCategoryList) {
-            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|39|33-preAction
+            if (command == List.SELECT_COMMAND) {//GEN-END:|7-commandAction|31|33-preAction
                 // write pre-action user code here
-                subCategoryListAction();//GEN-LINE:|7-commandAction|40|33-postAction
+                subCategoryListAction();//GEN-LINE:|7-commandAction|32|33-postAction
                 // write post-action user code here
-            } else if (command == getSubCategoryCommand) {//GEN-LINE:|7-commandAction|41|68-preAction
+            } else if (command == getSubCategoryCommand) {//GEN-LINE:|7-commandAction|33|68-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getAdvancedSearchForm());//GEN-LINE:|7-commandAction|42|68-postAction
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|34|68-postAction
                 // write post-action user code here
 
                 if(getSubCategoryList().size() > 0) {
                     selectedSubCategory = getSubCategoryList().getSelectedIndex();
 
                     Category currentSelectedCategory = (Category)BootStrap.categoryList[selectedCategory].getChildCategories().elementAt(selectedSubCategory);
-                    textField2.setString(currentSelectedCategory.getCategoryName());
+                    textField17.setString(currentSelectedCategory.getCategoryName());
                 }
-            } else if (command == subCategoryBackCommand) {//GEN-LINE:|7-commandAction|43|66-preAction
+            } else if (command == subCategoryBackCommand) {//GEN-LINE:|7-commandAction|35|66-preAction
                 // write pre-action user code here
-                switchDisplayable(null, getAdvancedSearchForm());//GEN-LINE:|7-commandAction|44|66-postAction
+//GEN-LINE:|7-commandAction|36|66-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|45|7-postCommandAction
-        }//GEN-END:|7-commandAction|45|7-postCommandAction
+            }//GEN-BEGIN:|7-commandAction|37|7-postCommandAction
+        }//GEN-END:|7-commandAction|37|7-postCommandAction
         // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|46|
-    //</editor-fold>//GEN-END:|7-commandAction|46|
+    }//GEN-BEGIN:|7-commandAction|38|
+    //</editor-fold>//GEN-END:|7-commandAction|38|
+
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: exitCommand ">//GEN-BEGIN:|18-getter|0|18-preInit
     /**
@@ -472,25 +434,7 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|22-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: advancedSearchForm ">//GEN-BEGIN:|27-getter|0|27-preInit
-    /**
-     * Returns an initiliazed instance of advancedSearchForm component.
-     * @return the initialized component instance
-     */
-    public Form getAdvancedSearchForm() {
-        if (advancedSearchForm == null) {//GEN-END:|27-getter|0|27-preInit
-            // write pre-init user code here
-            advancedSearchForm = new Form("Advanced Search", new Item[] { getTextField2(), getTextField3() });//GEN-BEGIN:|27-getter|1|27-postInit
-            advancedSearchForm.addCommand(getSelectSubCategoryCommand());
-            advancedSearchForm.addCommand(getSearchCommand());
-            advancedSearchForm.addCommand(getSearchBackCommand());
-            advancedSearchForm.addCommand(getAdvancedSearchExitCommand());
-            advancedSearchForm.setCommandListener(this);//GEN-END:|27-getter|1|27-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|27-getter|2|
-        return advancedSearchForm;
-    }
-    //</editor-fold>//GEN-END:|27-getter|2|
+
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: categoryList ">//GEN-BEGIN:|28-getter|0|28-preInit
     /**
@@ -560,12 +504,12 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
     public Form getSearchForm() {
         if (searchForm == null) {//GEN-END:|44-getter|0|44-preInit
             // write pre-init user code here
-            searchForm = new Form("Ujuzi Search", new Item[] { getTextField(), getTextField1() });//GEN-BEGIN:|44-getter|1|44-postInit
+            searchForm = new Form("Ujuzi Search", new Item[] { getTextField(), getTextField17(), getTextField1() });//GEN-BEGIN:|44-getter|1|44-postInit
             searchForm.addCommand(getSelectCategoryCommand());
             searchForm.addCommand(getSearchCommand());
-            searchForm.addCommand(getAdvancedSearchCommand());
             searchForm.addCommand(getSearchExitCommand());
             searchForm.addCommand(getSettingsCommand());
+            searchForm.addCommand(getSelectSearchSubCategoryCommand());
             searchForm.setCommandListener(this);//GEN-END:|44-getter|1|44-postInit
             // write post-init user code here
         }//GEN-BEGIN:|44-getter|2|
@@ -708,35 +652,9 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|67-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textField2 ">//GEN-BEGIN:|69-getter|0|69-preInit
-    /**
-     * Returns an initiliazed instance of textField2 component.
-     * @return the initialized component instance
-     */
-    public TextField getTextField2() {
-        if (textField2 == null) {//GEN-END:|69-getter|0|69-preInit
-            // write pre-init user code here
-            textField2 = new TextField("Sub Category", null, 100, TextField.ANY | TextField.UNEDITABLE);//GEN-LINE:|69-getter|1|69-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|69-getter|2|
-        return textField2;
-    }
-    //</editor-fold>//GEN-END:|69-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textField3 ">//GEN-BEGIN:|70-getter|0|70-preInit
-    /**
-     * Returns an initiliazed instance of textField3 component.
-     * @return the initialized component instance
-     */
-    public TextField getTextField3() {
-        if (textField3 == null) {//GEN-END:|70-getter|0|70-preInit
-            // write pre-init user code here
-            textField3 = new TextField("Search text", null, 100, TextField.ANY);//GEN-LINE:|70-getter|1|70-postInit
-            // write post-init user code here
-        }//GEN-BEGIN:|70-getter|2|
-        return textField3;
-    }
-    //</editor-fold>//GEN-END:|70-getter|2|
+
+
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: selectSubCategoryCommand ">//GEN-BEGIN:|71-getter|0|71-preInit
     /**
@@ -1131,6 +1049,36 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
         return detailsBackCommand;
     }
     //</editor-fold>//GEN-END:|122-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textField17 ">//GEN-BEGIN:|125-getter|0|125-preInit
+    /**
+     * Returns an initiliazed instance of textField17 component.
+     * @return the initialized component instance
+     */
+    public TextField getTextField17() {
+        if (textField17 == null) {//GEN-END:|125-getter|0|125-preInit
+            // write pre-init user code here
+            textField17 = new TextField("Sub Category", null, 32, TextField.ANY | TextField.UNEDITABLE);//GEN-LINE:|125-getter|1|125-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|125-getter|2|
+        return textField17;
+    }
+    //</editor-fold>//GEN-END:|125-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: selectSearchSubCategoryCommand ">//GEN-BEGIN:|126-getter|0|126-preInit
+    /**
+     * Returns an initiliazed instance of selectSearchSubCategoryCommand component.
+     * @return the initialized component instance
+     */
+    public Command getSelectSearchSubCategoryCommand() {
+        if (selectSearchSubCategoryCommand == null) {//GEN-END:|126-getter|0|126-preInit
+            // write pre-init user code here
+            selectSearchSubCategoryCommand = new Command("Select Sub Category", Command.ITEM, 0);//GEN-LINE:|126-getter|1|126-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|126-getter|2|
+        return selectSearchSubCategoryCommand;
+    }
+    //</editor-fold>//GEN-END:|126-getter|2|
 
     /**
      * Returns a display instance.
