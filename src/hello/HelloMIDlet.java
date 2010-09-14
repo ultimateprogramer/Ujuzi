@@ -15,6 +15,8 @@ import com.ujuzi.xml.XMLResources;
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 import org.netbeans.microedition.lcdui.SplashScreen;
+import org.netbeans.microedition.lcdui.WaitScreen;
+import org.netbeans.microedition.util.SimpleCancellableTask;
 
 /**
  * @author Ahmed Maawy
@@ -71,6 +73,8 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
     private TextField textField9;
     private TextField textField16;
     private TextField textField15;
+    private WaitScreen waitScreen;
+    private SimpleCancellableTask task;
     //</editor-fold>//GEN-END:|fields|0|
 
     /**
@@ -253,26 +257,8 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
             if (command == searchCommand) {//GEN-END:|7-commandAction|15|49-preAction
                 // write pre-action user code here
                 if(selectedCategory > - 1 || selectedSubCategory > -1) {
-//GEN-LINE:|7-commandAction|16|49-postAction
-                    // write post-action user code here
-
                     getResultList().deleteAll();
-
-                    Thread mySearchThread = new Thread(new Runnable() {
-
-                        public void run() {
-                            if(doSearch(textField1.getString())) {
-                                int numResults = searchResultResources.length;
-
-                                for(int resultsLoop = 0; resultsLoop < numResults; resultsLoop++) {
-                                    getResultList().append(searchResultResources[resultsLoop].getTitle(), null);
-                                }
-                            }
-                        }
-
-                    });
-
-                    mySearchThread.start();
+                    switchDisplayable(null, getWaitScreen());//GEN-LINE:|7-commandAction|16|49-postAction
                 }
             } else if (command == searchExitCommand) {//GEN-LINE:|7-commandAction|17|53-preAction
                 // write pre-action user code here
@@ -366,11 +352,21 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
                 // write pre-action user code here
 //GEN-LINE:|7-commandAction|36|66-postAction
                 // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|37|7-postCommandAction
-        }//GEN-END:|7-commandAction|37|7-postCommandAction
+            }//GEN-BEGIN:|7-commandAction|37|134-preAction
+        } else if (displayable == waitScreen) {
+            if (command == WaitScreen.FAILURE_COMMAND) {//GEN-END:|7-commandAction|37|134-preAction
+                // write pre-action user code here
+                switchDisplayable(null, getSearchForm());//GEN-LINE:|7-commandAction|38|134-postAction
+                // write post-action user code here
+            } else if (command == WaitScreen.SUCCESS_COMMAND) {//GEN-LINE:|7-commandAction|39|133-preAction
+                // write pre-action user code here
+                switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|40|133-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|41|7-postCommandAction
+        }//GEN-END:|7-commandAction|41|7-postCommandAction
         // write post-action user code here
-    }//GEN-BEGIN:|7-commandAction|38|
-    //</editor-fold>//GEN-END:|7-commandAction|38|
+    }//GEN-BEGIN:|7-commandAction|42|
+    //</editor-fold>//GEN-END:|7-commandAction|42|
 
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: exitCommand ">//GEN-BEGIN:|18-getter|0|18-preInit
@@ -1088,6 +1084,52 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
         return selectSearchSubCategoryCommand;
     }
     //</editor-fold>//GEN-END:|126-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: waitScreen ">//GEN-BEGIN:|130-getter|0|130-preInit
+    /**
+     * Returns an initiliazed instance of waitScreen component.
+     * @return the initialized component instance
+     */
+    public WaitScreen getWaitScreen() {
+        if (waitScreen == null) {//GEN-END:|130-getter|0|130-preInit
+            // write pre-init user code here
+            waitScreen = new WaitScreen(getDisplay());//GEN-BEGIN:|130-getter|1|130-postInit
+            waitScreen.setTitle("Please wait");
+            waitScreen.setCommandListener(this);
+            waitScreen.setText("Displaying results...");
+            waitScreen.setTask(getTask());//GEN-END:|130-getter|1|130-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|130-getter|2|
+        return waitScreen;
+    }
+    //</editor-fold>//GEN-END:|130-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: task ">//GEN-BEGIN:|135-getter|0|135-preInit
+    /**
+     * Returns an initiliazed instance of task component.
+     * @return the initialized component instance
+     */
+    public SimpleCancellableTask getTask() {
+        if (task == null) {//GEN-END:|135-getter|0|135-preInit
+            // write pre-init user code here
+            task = new SimpleCancellableTask();//GEN-BEGIN:|135-getter|1|135-execute
+            task.setExecutable(new org.netbeans.microedition.util.Executable() {
+                public void execute() throws Exception {//GEN-END:|135-getter|1|135-execute
+                    // write task-execution user code here
+                    if(doSearch(textField1.getString())) {
+			int numResults = searchResultResources.length;
+
+			for(int resultsLoop = 0; resultsLoop < numResults; resultsLoop++) {
+				getResultList().append(searchResultResources[resultsLoop].getTitle(), null);
+			}
+                    }
+                }//GEN-BEGIN:|135-getter|2|135-postInit
+            });//GEN-END:|135-getter|2|135-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|135-getter|3|
+        return task;
+    }
+    //</editor-fold>//GEN-END:|135-getter|3|
 
     /**
      * Returns a display instance.
