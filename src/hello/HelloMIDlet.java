@@ -114,6 +114,15 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
         }
 
         switchDisplayable(null, getResultList());
+
+        if(resultsListOkCommand != null) {
+            getResultList().removeCommand(getResultsListOkCommand());
+            resultsListOkCommand = null;
+        }
+
+        if(searchResultResources.length > 0) {
+            getResultList().addCommand(getResultsListOkCommand());
+        }
         
         return true;
     }
@@ -244,7 +253,7 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
             if (command == searchCommand) {//GEN-END:|7-commandAction|15|49-preAction
                 // write pre-action user code here
                 if(selectedCategory > - 1 || selectedSubCategory > -1) {
-                    switchDisplayable(null, getResultList());//GEN-LINE:|7-commandAction|16|49-postAction
+//GEN-LINE:|7-commandAction|16|49-postAction
                     // write post-action user code here
 
                     getResultList().deleteAll();
@@ -287,7 +296,7 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
             } else if (command == selectSearchSubCategoryCommand) {//GEN-LINE:|7-commandAction|21|127-preAction
                 // write pre-action user code here
                 if(selectedCategory > -1) {
-                switchDisplayable(null, getSubCategoryList());//GEN-LINE:|7-commandAction|22|127-postAction
+                    switchDisplayable(null, getSubCategoryList());//GEN-LINE:|7-commandAction|22|127-postAction
                     // write post-action user code here
                     getSubCategoryList().deleteAll();
 
@@ -861,7 +870,7 @@ public class HelloMIDlet extends MIDlet implements CommandListener {
     public TextField getTextField8() {
         if (textField8 == null) {//GEN-END:|104-getter|0|104-preInit
             // write pre-init user code here
-            textField8 = new TextField("Radius", null, 32, TextField.ANY);//GEN-LINE:|104-getter|1|104-postInit
+            textField8 = new TextField("Radius (miles)", null, 32, TextField.ANY);//GEN-LINE:|104-getter|1|104-postInit
             // write post-init user code here
         }//GEN-BEGIN:|104-getter|2|
         return textField8;

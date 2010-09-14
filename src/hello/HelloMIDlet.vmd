@@ -262,13 +262,8 @@
                         <Property name="constraints" typeID="Pint" value="V131072"/>
                     </Component>
                     <Component componentID="49" typeID="C#CommandEventSource">
-                        <Property name="eventHandler" typeID="C#EventHandler" value="R79"/>
                         <Property name="displayable" typeID="Cjavax.microedition.lcdui.Displayable" value="R44"/>
                         <Property name="command" typeID="Cjavax.microedition.lcdui.Command" value="R48"/>
-                        <Component componentID="79" typeID="C#SwitchDisplayableEventHandler">
-                            <Property name="eventSource" typeID="C#EventSource" value="R49"/>
-                            <Property name="displayable" typeID="Cjavax.microedition.lcdui.Displayable" value="R76"/>
-                        </Component>
                     </Component>
                     <Component componentID="53" typeID="C#CommandEventSource">
                         <Property name="eventHandler" typeID="C#EventHandler" value="R99"/>
@@ -409,7 +404,7 @@
                     <Component componentID="104" typeID="Cjavax.microedition.lcdui.TextField">
                         <Property name="instanceName" typeID="Pjava.lang.String" value="VtextField8"/>
                         <Property name="codeGenerated" typeID="Pboolean" value="Vtrue"/>
-                        <Property name="label" typeID="Pjava.lang.String" value="VRadius"/>
+                        <Property name="label" typeID="Pjava.lang.String" value="VRadius (miles)"/>
                         <Property name="itemCommandListener" typeID="C#ItemCommandListener" value="R17"/>
                         <Property name="maxSize" typeID="Pint" value="V32"/>
                         <Property name="constraints" typeID="Pint" value="V0"/>
@@ -502,13 +497,13 @@
         </Component>
     </Document>
     <FlowScene version="1">
-        <Node componentID="44" descriptorID="componentNode44" x="433" y="104"/>
-        <Node componentID="28" descriptorID="componentNode28" x="40" y="173"/>
-        <Node componentID="76" descriptorID="componentNode76" x="257" y="529"/>
-        <Node componentID="87" descriptorID="componentNode87" x="702" y="144"/>
-        <Node componentID="32" descriptorID="componentNode32" x="28" y="303"/>
         <Node componentID="2" descriptorID="componentNode2" x="24" y="26"/>
+        <Node componentID="76" descriptorID="componentNode76" x="257" y="529"/>
         <Node componentID="22" descriptorID="componentNode22" x="302" y="28"/>
+        <Node componentID="28" descriptorID="componentNode28" x="40" y="173"/>
+        <Node componentID="32" descriptorID="componentNode32" x="28" y="303"/>
+        <Node componentID="87" descriptorID="componentNode87" x="702" y="144"/>
         <Node componentID="111" descriptorID="componentNode111" x="34" y="531"/>
+        <Node componentID="44" descriptorID="componentNode44" x="433" y="104"/>
     </FlowScene>
 </VisualDesign>
