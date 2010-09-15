@@ -28,7 +28,7 @@ package com.ujuzi.settings;
  * @author Ahmed Maawy
  */
 public class ApplicationSettings {
-    public static String BASE_URL = "http://api.thebeehive.org";
+    public static String BASE_URL = "http://api.one-economy.com";
     public static String BASE_POSTAL = "00100";
     public static String BASE_OEID = "2931477";
     public static String BASE_LAT = "%20-1.2833";
